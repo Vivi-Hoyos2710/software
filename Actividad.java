@@ -11,6 +11,16 @@ public class Actividad {
         return this.estado;
     }
     public Actividad(String n,int i,Horario h){
-        
+        this.nombre=n;
+        this.importancia=i;
+        this.horario=h;
+        this.puntuacion= i*5;
     }
+    public Actividad(String n,Horario h){
+        this.nombre=n;
+        this.horario=h;
+    }
+    
+
+
 }
