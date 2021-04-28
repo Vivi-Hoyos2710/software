@@ -2,7 +2,7 @@ public class Horario {
     private int dias;
     private int mes;
     private int hora;
-    private Actividad[][][] temporalidad= new Actividad[12][][24];
+    public static Actividad[][][] temporalidad= new Actividad[12][][24];
     temporalidad[0][31];
     temporalidad[1][28];
     temporalidad[2][31];

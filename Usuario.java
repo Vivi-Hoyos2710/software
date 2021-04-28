@@ -56,8 +56,17 @@ public class Usuario{
         gustos.add(g);
     }
     public void asignarActividad(String n,int i,int d,int m,int h){
-        //Horario t= new Horario(m,d,h);
-        //Actividad a=new Actividad(n,i,t);
+        Horario t= new Horario(m,d,h);
+        Actividad a=new Actividad(n,i,t);
+        for(int z=0;z<Horario.temporalidad.length;z++){
+            for(int x=0;x<Horario.temporalidad[z].length;x++){
+                for(int c=0;c<Horario.temporalidad[z][x].length;c++){
+                    if(z==m && x==d && c==h){
+                        Horario.temporalidad[z][x][c]= a;
+                    }
+                }
+            }
+        }
     }
     public String revisarInformacion(){
         String info= "Nombre: "+this.nombre+"\n"+"Edad: "+this.edad+"\n"+"Género: "+this.genero+"\n"+"E-mail: "+this.email+"\n"+"Nivel Academico: "+this.nivel_academico+"\n"+"Puntaje Total: "+this.puntaje_total+"\n"+"Ranking: "+this.ranking+"\n"+"Gustos: ";
@@ -67,7 +76,7 @@ public class Usuario{
         return info;
     }
 
-    
+
 
 
 }
