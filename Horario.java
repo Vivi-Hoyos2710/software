@@ -1,24 +1,19 @@
 public class Horario {
-    private int dias;
-    private int mes;
-    private int hora;
-    public static Actividad[][][] temporalidad= new Actividad[12][][24];
-    temporalidad[0][31];
-    temporalidad[1][28];
-    temporalidad[2][31];
-    temporalidad[3][30];
-    temporalidad[4][31];
-    temporalidad[5][30];
-    temporalidad[6][31];
-    temporalidad[7][31];
-    temporalidad[8][30];
-    temporalidad[9][31];
-    temporalidad[10][30];
-    temporalidad[11][31];
-    public Horario(int m, int d, int h){
-        this.mes=m;
-        this.dias=d;
-        this.hora=h;
+    public Object[] temporalidad= new Object[12];
+
+    public Horario(){
+        temporalidad[0]= new Actividad[31][24];
+        temporalidad[1]= new Actividad[28][24];
+        temporalidad[2]= new Actividad[31][24];
+        temporalidad[3]= new Actividad[30][24];
+        temporalidad[4]= new Actividad[31][24];
+        temporalidad[5]= new Actividad[30][24];
+        temporalidad[6]= new Actividad[31][24];
+        temporalidad[7]= new Actividad[31][24];
+        temporalidad[8]= new Actividad[30][24];
+        temporalidad[9]= new Actividad[31][24];
+        temporalidad[10]= new Actividad[30][24];
+        temporalidad[11]= new Actividad[31][24];
     }
 }
 
