@@ -1,5 +1,5 @@
 public class Horario {
-    public Object[] temporalidad= new Object[12];
+    public static Actividad[][][] temporalidad= new Actividad[12][][];
 
     public Horario(){
         temporalidad[0]= new Actividad[31][24];

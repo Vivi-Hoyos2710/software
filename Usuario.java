@@ -26,6 +26,9 @@ public class Usuario {
     public void setNombre(String n) {
         this.nombre = n;
     }
+    public void setEmail(String e){
+        this.email=e;
+    }
 
     public void setNivelAcademico(String n) {
         this.nivel_academico = n;
@@ -81,6 +84,7 @@ public class Usuario {
             Horario.temporalidad[m][d][h] = a;
         }
     }
+    
 
     public String revisarInformacion() {
         String info = "Nombre: " + this.nombre + "\n" + "Edad: " + this.edad + "\n" + "Género: " + this.genero + "\n"
