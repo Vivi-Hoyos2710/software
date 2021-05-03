@@ -29,7 +29,5 @@ public class Actividad {
     public int getImportancia(){
         return this.importancia;
     }
-    
-
 
 }

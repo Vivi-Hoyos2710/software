@@ -9,6 +9,7 @@ public class Usuario {
     private int ranking;
     private int puntaje_total;
     private String nivel_academico;
+    private Horario horarioUsuario;
 
     public Usuario() {
     }
@@ -19,7 +20,7 @@ public class Usuario {
         this.email = m;
         this.nivel_academico = a;
         this.genero = g;
-        Horario t = new Horario();
+        this.horarioUsuario= new Horario();
     }
 
     // setters//
@@ -46,6 +47,7 @@ public class Usuario {
         this.edad = n;
     }
 
+
     // getters//
     public String getNombre() {
         return this.nombre;
@@ -70,6 +72,9 @@ public class Usuario {
     public String getEmail() {
         return this.email;
     }
+    public Horario getHorarioUsuario(){
+        return this.horarioUsuario;
+    }
 
     // Metodos//
     public void añadirGustos(String g) {
@@ -84,7 +89,7 @@ public class Usuario {
             Horario.temporalidad[m][d][h] = a;
         }
     }
-    
+
 
     public String revisarInformacion() {
         String info = "Nombre: " + this.nombre + "\n" + "Edad: " + this.edad + "\n" + "Género: " + this.genero + "\n"

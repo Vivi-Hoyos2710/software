@@ -9,7 +9,8 @@ public class Principal {
         System.out.println("Dinos tu edad: ");
         int edad= entrada.nextInt();
         System.out.println("Dinos tu nivel académico: ");
-        String nivel= entrada.next(); //preguntar porqué ignora esta entrada (???)
+        entrada= new Scanner(System.in);
+        String nivel= entrada.nextLine(); //preguntar porqué ignora esta entrada (???)
         System.out.println("Dinos tu e-mail: ");
         String email= entrada.next();
         Usuario u= new Usuario(edad,nombre,email,nivel,genero);
@@ -93,6 +94,10 @@ public class Principal {
                             }
                         }
                     }
+                case 11:
+                    System.out.println("Ingresa el mes que quieres visualizar");
+                    int mesesito= entrada.nextInt();
+                    u.getHorarioUsuario().graficarHorario(mesesito);
                 break;
             }
                 System.out.println("Selecciona tu opción: ");
