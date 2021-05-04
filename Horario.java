@@ -15,7 +15,7 @@ public class Horario {
         temporalidad[10]= new Actividad[30][24];
         temporalidad[11]= new Actividad[31][24];
     }
-    public void graficarHorario(int mes){
+    /*public void graficarHorario(int mes){
         mes = mes -1;
         String[][] dias = new String[42][];
         int diaInicialMes = 0;
@@ -85,5 +85,5 @@ public class Horario {
             dia[i]=linea;
         }
         return dia;
-    }
+    }*/
 }
