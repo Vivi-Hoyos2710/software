@@ -94,11 +94,7 @@ public class Principal {
                             }
                         }
                     }
-                /*case 11:
-                    System.out.println("Ingresa el mes que quieres visualizar");
-                    int mesesito= entrada.nextInt();
-                    u.getHorarioUsuario().graficarHorario(mesesito);
-                break;*/
+
             }
                 System.out.println("Selecciona tu opción: ");
                 System.out.println("0. Salir del sistema");
