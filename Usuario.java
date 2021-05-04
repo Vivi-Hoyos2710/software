@@ -77,7 +77,7 @@ public class Usuario {
     }
 
     // Metodos//
-    public void añadirGustos(String g) {
+    public void addGustos(String g) {
         gustos.add(g);
     }
 

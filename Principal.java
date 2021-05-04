@@ -52,7 +52,7 @@ public class Principal {
                 case 5:
                     System.out.println("Dinos tu gusto (Puedes añadir más si selecciona nuevamente la opción): ");
                     String gusto= entrada.next();
-                    u.añadirGustos(gusto);
+                    u.addGustos(gusto);
                 break;
                 case 6:
                 System.out.println("Indique el nombre de la actividad, la importancia (medida del 1 al 10), mes, día y hora ");
