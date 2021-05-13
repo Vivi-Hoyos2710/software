@@ -56,7 +56,7 @@ public class Principal {
                 break;
                 case 6:
                 System.out.println("Indique el nombre de la actividad, la importancia (medida del 1 al 10), mes, día y hora ");
-                String nombreActividad= entrada.nextLine();
+                String nombreActividad= entrada.next();
                 int importancia= entrada.nextInt();
                 int mes= entrada.nextInt()-1;
                 int dia= entrada.nextInt()-1;
@@ -94,6 +94,12 @@ public class Principal {
                             }
                         }
                     }
+                    break;
+                case 11:
+                System.out.println("Ingresa el mes que quieres visualizar");
+                int mesesito= entrada.nextInt();
+                u.getHorarioUsuario().graficarHorario(mesesito);
+                break;
 
             }
                 System.out.println("Selecciona tu opción: ");

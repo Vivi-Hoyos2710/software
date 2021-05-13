@@ -1,6 +1,12 @@
-public class Horario {
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Aplicacion;
+import java.io.Serializable;
+public class Horario implements Serializable{
     public static Actividad[][][] temporalidad= new Actividad[12][][];
-
     public Horario(){
         temporalidad[0]= new Actividad[31][24];
         temporalidad[1]= new Actividad[28][24];
