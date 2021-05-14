@@ -53,6 +53,9 @@ public class Usuario implements Serializable{
     public void setEdad(int n) {
         this.edad = n;
     }
+     public void setGustos(ArrayList<String> gustos) {
+        this.gustos = gustos;
+    }
 
 
     // getters//
