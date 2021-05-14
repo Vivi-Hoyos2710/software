@@ -6,7 +6,7 @@
 package Aplicacion;
 import java.io.Serializable;
 public class Horario implements Serializable{
-    public static Actividad[][][] temporalidad= new Actividad[12][][];
+    public Actividad[][][] temporalidad= new Actividad[12][][];
     public Horario(){
         temporalidad[0]= new Actividad[31][24];
         temporalidad[1]= new Actividad[28][24];

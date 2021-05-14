@@ -82,18 +82,22 @@ public class Usuario implements Serializable{
     public Horario getHorarioUsuario(){
         return this.horarioUsuario;
     }
+    
+    public ArrayList<String> getGustos(){
+        return this.gustos;
+    }
 
     // Metodos//
     public void addGustos(String g) {
         gustos.add(g);
     }
 
-    public void asignarActividad(String n, int i,int m, int d, int h) {
+    public void asignarActividad(String nombre, int importancia,int mes, int dia, int hora) {
         
-        Actividad a = new Actividad(n, i);
+        Actividad a = new Actividad(nombre, importancia);
 
-        if (Horario.temporalidad[m][d][h]==null) {
-            Horario.temporalidad[m][d][h] = a;
+        if (horarioUsuario.temporalidad[mes][dia][hora]==null) {
+            horarioUsuario.temporalidad[mes][dia][hora] = a;
         }
     }
 

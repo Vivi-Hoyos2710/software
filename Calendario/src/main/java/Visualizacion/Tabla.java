@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.function.Function;
 import javax.swing.JInternalFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,6 +31,7 @@ public class Tabla extends JPanel {
     final JInternalFrame ventanaContenedor;
     String ventanaObjetivo;
     JTable tabla;
+    Function nextView;
     public Tabla() {
         super(new GridLayout(1,0));
         ventanaContenedor=new JInternalFrame();
@@ -73,9 +75,11 @@ public class Tabla extends JPanel {
         
     }
 
-    public Tabla(String[] cabecera, Object[][] datos, JInternalFrame contenedor) {
+    public Tabla(String[] cabecera, Object[][] datos, JInternalFrame contenedor,int alto,String ventanaObjetivo) {
         super(new GridLayout(1, 0));
+        this.nextView= nextView;
         ventanaContenedor = contenedor;
+        this.ventanaObjetivo=ventanaObjetivo;
         tabla = new JTable(datos, cabecera);
         tabla.getTableHeader().setReorderingAllowed(false);
         //Sobreescritura del modelo de la tabla para poder modificar sus valores.
@@ -87,6 +91,7 @@ public class Tabla extends JPanel {
         tabla.setModel(tableModel);
         tabla.setPreferredScrollableViewportSize(new Dimension(500, 70));
         tabla.setFillsViewportHeight(true);
+        tabla.setRowHeight(alto); //Estableciendo alto de las filas.
         setListener();
         
         if (DEBUG) {
@@ -103,7 +108,8 @@ public class Tabla extends JPanel {
 
         //Add the scroll pane to this panel.
         add(scrollPane);
-
+        
+        
     }
     
     public void setListener(){
@@ -114,6 +120,12 @@ public class Tabla extends JPanel {
                     int column = tabla.getSelectedColumn();
                     System.out.println(row);
                     System.out.println(column);
+                    switch(ventanaObjetivo){
+                        case "dia":
+                            new Dia().setVisible(true);
+                        
+                    }
+                    
                 }
             });
     }
@@ -150,3 +162,4 @@ public class Tabla extends JPanel {
         
     }
 }
+

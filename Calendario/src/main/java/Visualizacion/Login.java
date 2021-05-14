@@ -7,6 +7,9 @@ package Visualizacion;
 import static javax.swing.JOptionPane.showMessageDialog;
 import static Aplicacion.Principal.data;
 import Aplicacion.Usuario;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author almah
@@ -127,10 +130,15 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Usuario usuarios=data.getUsuarios().get(jTextField1.getText());
-        if(usuarios!=null){
+        Usuario usuario=data.getUsuarios().get(jTextField1.getText());
+        if(usuario!=null){
            this.dispose();
-           new MenuPrincipal().setVisible(true);
+            try {
+                new MenuPrincipal(usuario.getEmail()).setVisible(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
            
         }
         else{
