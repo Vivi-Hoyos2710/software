@@ -5,8 +5,10 @@
  */
 package Visualizacion;
 
+import Aplicacion.Actividad;
 import static Aplicacion.Principal.data;
 import Aplicacion.Usuario;
+import Persistencia.GestorDatos;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import javax.swing.DefaultListModel;
+
 /**
  *
  * @author almah
@@ -27,13 +30,27 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     JInternalFrame frame = new JInternalFrame("calendario");
     String correoUsuario;
-    public MenuPrincipal(String correoUsuario) throws PropertyVetoException {
-        this.correoUsuario=correoUsuario;
+
+    public MenuPrincipal(String correoUsuario)  {
+        this.correoUsuario = correoUsuario;
         initComponents();
         setVisible(true);
         setTitle("Adventure Schedule");
         setLocationRelativeTo(null);
         // Construyendo la tab de calendario
+        graficarHorario();
+
+        //Construyendo tab de informacion del usuario
+        jTextField1.setText(data.getUsuarios().get(correoUsuario).getNombre());
+        jTextField2.setText(data.getUsuarios().get(correoUsuario).getEdad() + "");
+        jTextField3.setText(data.getUsuarios().get(correoUsuario).getEmail());
+        jTextField4.setText(data.getUsuarios().get(correoUsuario).getRanking() + "");
+        jTextField5.setText(data.getUsuarios().get(correoUsuario).getPuntajeTotal() + "");
+        jList1.setListData((data.getUsuarios().get(correoUsuario).getGustos()).toArray(new String[0]));
+        jTextField6.setText(data.getUsuarios().get(correoUsuario).getNivelAcademico());
+    }
+    
+    public void graficarHorario (){
         String[] cabecera = new String[7];
         cabecera[0] = "Domingo";
         cabecera[1] = "Lunes";
@@ -42,33 +59,33 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cabecera[4] = "Jueves";
         cabecera[5] = "Viernes";
         cabecera[6] = "Sabado";
-
-        Tabla tabla = new Tabla(cabecera, new Object[6][7], frame,90,"dia");
+        
+        Actividad[][] actividades = data.getUsuarios().get(correoUsuario).getHorarioUsuario().temporalidad[jComboBox1.getSelectedIndex()];
+        
+        String[][] actividadesMes = new String [6][7];
+        int diaInicial = 1;
+        int semana = 0;
+        for (int i = 0; i < actividades.length; i++) {
+            for (int j = 0; j < 10; j++) {
+                
+            }
+        }
+        Tabla tabla = new Tabla(cabecera, actividadesMes, frame, 90, "dia");
 
         this.jPanel4.add(frame);
-        /*
-        Tabla newContentPaneproducto = new Tabla();
-        newContentPaneproducto.enable(false);
-        newContentPaneproducto.setOpaque(true);
-        */
         frame.setContentPane(tabla);
         frame.setBorder(null);
-        ((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getUI()).setNorthPane(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
         frame.pack();
-        frame.setMaximum(true);
+        try {
+            frame.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         frame.setVisible(true);
         
-        //Construyendo tab de informacion del usuario
-        
-        
-        jTextField1.setText(data.getUsuarios().get(correoUsuario).getNombre());
-        jTextField2.setText(data.getUsuarios().get(correoUsuario).getEdad()+"");
-        jTextField3.setText(data.getUsuarios().get(correoUsuario).getEmail());
-        jTextField4.setText(data.getUsuarios().get(correoUsuario).getRanking()+"");
-        jTextField5.setText(data.getUsuarios().get(correoUsuario).getPuntajeTotal()+"");
-        jList1.setListData((data.getUsuarios().get(correoUsuario).getGustos()).toArray(new String[0]));
-        jTextField6.setText(data.getUsuarios().get(correoUsuario).getNivelAcademico());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -379,12 +396,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         data.getUsuarios().get(correoUsuario).setNombre(jTextField1.getText());
         data.getUsuarios().get(correoUsuario).setEdad(Integer.parseInt(jTextField2.getText()));
-        
-        ArrayList<String> listado=new ArrayList<String>();
-        for(int i=0;i<jList1.getModel().getSize();i++){
+
+        ArrayList<String> listado = new ArrayList<String>();
+        for (int i = 0; i < jList1.getModel().getSize(); i++) {
             listado.add(jList1.getModel().getElementAt(i));
         }
         data.getUsuarios().get(correoUsuario).setGustos(listado);
+        GestorDatos.guardarDatos(data);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -392,7 +410,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        
+
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -401,18 +419,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         for(int i=0;i<jList1.getModel().getSize();i++){
             gustoss[i]=jList1.getModel().getElementAt(i);
         }*/
-        ArrayList<String> gustosss=new ArrayList<String>();
-        for(int i=0;i<jList1.getModel().getSize();i++){
-            if(!(jList1.getModel().getElementAt(i).equalsIgnoreCase(jTextField7.getText()))){
-                 gustosss.add(jList1.getModel().getElementAt(i));           
-            }
+        ArrayList<String> gustosss = new ArrayList<String>();
+        for (int i = 0; i < jList1.getModel().getSize(); i++) {
+
+            gustosss.add(jList1.getModel().getElementAt(i));
+
         }
-        String[] nuevosGustos=new String[gustosss.size()];
-        for(int i=0;i<gustosss.size();i++){
-            nuevosGustos[i]=gustosss.get(i);
+        gustosss.remove(jList1.getSelectedIndex());
+        String[] nuevosGustos = new String[gustosss.size()];
+        for (int i = 0; i < gustosss.size(); i++) {
+            nuevosGustos[i] = gustosss.get(i);
         }
-        for(int i=0;i<nuevosGustos.length;i++){
-            model.add(i,nuevosGustos[i]);
+        for (int i = 0; i < nuevosGustos.length; i++) {
+            model.add(i, nuevosGustos[i]);
         }
         jList1.setModel(model);
         jList1.repaint();
@@ -420,18 +439,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        DefaultListModel model = new DefaultListModel();
-        String[] gustoss=new String[jList1.getModel().getSize()+1];
-        for(int i=0;i<jList1.getModel().getSize();i++){
-            gustoss[i]=jList1.getModel().getElementAt(i);
+        if (!jTextField7.getText().equals("")){
+            DefaultListModel model = new DefaultListModel();
+            String[] gustoss = new String[jList1.getModel().getSize() + 1];
+            for (int i = 0; i < jList1.getModel().getSize(); i++) {
+                gustoss[i] = jList1.getModel().getElementAt(i);
+            }
+            gustoss[jList1.getModel().getSize()] = jTextField7.getText();
+            for (int i = 0; i < gustoss.length; i++) {
+                model.add(i, gustoss[i]);
+            }
+            jList1.setModel(model);
+            jList1.repaint();
+            jTextField7.setText("");
         }
-        gustoss[jList1.getModel().getSize()]=jTextField7.getText();
-        for(int i=0;i<gustoss.length;i++){
-            model.add(i,gustoss[i]);
-        }
-        jList1.setModel(model);
-        jList1.repaint();
-        jTextField7.setText(""); 
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
 
