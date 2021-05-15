@@ -126,7 +126,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Programado por Pablo Micolta, Viviana Hoyos, Juan Jose Velez, version 0.001 "/>
+        <Property name="text" type="java.lang.String" value="Programado por Pablo Micolta, Viviana Hoyos, Juan Jose Velez, version 0.5 "/>
       </Properties>
     </Component>
   </SubComponents>

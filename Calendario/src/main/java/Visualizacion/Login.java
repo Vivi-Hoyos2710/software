@@ -71,7 +71,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setText("¿No tiene cuenta?, cree una");
 
-        jLabel4.setText("Programado por Pablo Micolta, Viviana Hoyos, Juan Jose Velez, version 0.001 ");
+        jLabel4.setText("Programado por Pablo Micolta, Viviana Hoyos, Juan Jose Velez, version 0.5 ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,11 +133,7 @@ public class Login extends javax.swing.JFrame {
         Usuario usuario=data.getUsuarios().get(jTextField1.getText());
         if(usuario!=null){
            this.dispose();
-            try {
-                new MenuPrincipal(usuario.getEmail()).setVisible(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           new MenuPrincipal(usuario.getEmail()).setVisible(true);
            
            
         }

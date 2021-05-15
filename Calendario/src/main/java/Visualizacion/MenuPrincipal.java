@@ -9,7 +9,15 @@ import Aplicacion.Actividad;
 import static Aplicacion.Principal.data;
 import Aplicacion.Usuario;
 import Persistencia.GestorDatos;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -17,7 +25,11 @@ import javax.swing.JInternalFrame;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -31,12 +43,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     JInternalFrame frame = new JInternalFrame("calendario");
     String correoUsuario;
 
-    public MenuPrincipal(String correoUsuario)  {
+    public MenuPrincipal(String correoUsuario) {
         this.correoUsuario = correoUsuario;
         initComponents();
         setVisible(true);
         setTitle("Adventure Schedule");
         setLocationRelativeTo(null);
+        jComboBox1.addActionListener(new jComboBox1Listener());
         // Construyendo la tab de calendario
         graficarHorario();
 
@@ -48,9 +61,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jTextField5.setText(data.getUsuarios().get(correoUsuario).getPuntajeTotal() + "");
         jList1.setListData((data.getUsuarios().get(correoUsuario).getGustos()).toArray(new String[0]));
         jTextField6.setText(data.getUsuarios().get(correoUsuario).getNivelAcademico());
+        ImagenRanking imagen=new ImagenRanking();
+        jLabel10.setIcon(imagen.ranking);
     }
-    
-    public void graficarHorario (){
+
+    public void graficarHorario() {
         String[] cabecera = new String[7];
         cabecera[0] = "Domingo";
         cabecera[1] = "Lunes";
@@ -59,15 +74,67 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cabecera[4] = "Jueves";
         cabecera[5] = "Viernes";
         cabecera[6] = "Sabado";
-        
+
         Actividad[][] actividades = data.getUsuarios().get(correoUsuario).getHorarioUsuario().temporalidad[jComboBox1.getSelectedIndex()];
-        
-        String[][] actividadesMes = new String [6][7];
-        int diaInicial = 1;
-        int semana = 0;
-        for (int i = 0; i < actividades.length; i++) {
-            for (int j = 0; j < 10; j++) {
+
+        String[][] actividadesMes = new String[6][7];
+
+        int diaInicial=0;
+        int indiceMes=jComboBox1.getSelectedIndex(); 
+        switch (indiceMes) {
+            case 0:
+                diaInicial=5;
+                break;
+            case 1:
+                diaInicial=1;
+                break;
+            case 2:
+                diaInicial=1;
+                break;
+            case 3:
+                diaInicial=4;
+                break; 
+            case 4:
+                diaInicial=6;
+                break;
+            case 5:
+                diaInicial=2;
+                break;
+            case 6:
+                diaInicial=4;
+                break;
+            case 7:
+                diaInicial=0;
+                break;
+            case 8:
+                diaInicial=3;
+                break;
+            case 9:
+                diaInicial=5;
+                break;
+            case 10:
+                diaInicial=1;
+                break;
+            case 11:
+                diaInicial=3;
+                break;
                 
+        }
+        boolean inicia = true;
+        int j = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int k = 0; k < 7; k++) {
+                if (inicia) {
+                    inicia = false;
+                    k = diaInicial;
+                }
+                if (j < actividades.length) {
+                    actividadesMes[i][k] = (j + 1) + "-" + getActividades(actividades[j], 5);
+                    j++;
+                } else {
+                    break;
+                }
+
             }
         }
         Tabla tabla = new Tabla(cabecera, actividadesMes, frame, 90, "dia");
@@ -83,7 +150,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
             Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         frame.setVisible(true);
-        
+
+    }
+
+    public String getActividades(Actividad[] actividades, int limiteActividades) {
+        String tarea = "";
+        if (limiteActividades > 24) {
+            limiteActividades = 24;
+        }
+        for (int i = 0; i < limiteActividades; i++) {
+            if (actividades[i] != null) {
+                tarea = tarea + actividades[i].getNombre() + "\n";
+            }
+        }
+        return tarea;
     }
 
     /**
@@ -125,6 +205,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jTextField7 = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -191,7 +275,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Calendario", jPanel2);
@@ -375,6 +459,54 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Informacion", jPanel3);
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setText("Top 5");
+
+        jLabel10.setText("jLabel10");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(238, 238, 238)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(267, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(296, Short.MAX_VALUE)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(72, 72, 72))
+        );
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(257, 257, 257)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("tab3", jPanel7);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -439,7 +571,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (!jTextField7.getText().equals("")){
+        if (!jTextField7.getText().equals("")) {
             DefaultListModel model = new DefaultListModel();
             String[] gustoss = new String[jList1.getModel().getSize() + 1];
             for (int i = 0; i < jList1.getModel().getSize(); i++) {
@@ -464,6 +596,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -471,6 +604,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -478,6 +612,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -489,4 +625,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
+    class jComboBox1Listener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            graficarHorario();
+        }
+
+    }
+    public class ImagenRanking extends JFrame{
+        ImageIcon ranking= new ImageIcon("top.jpg");
+        public ImagenRanking(){
+        initComponents();
+        this.setLocationRelativeTo(null);
+        jLabel10.setText("");
+        }
+    }
+    
 }

@@ -9,6 +9,7 @@ package Visualizacion;
  *
  * @author
  */
+import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,7 +23,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.function.Function;
 import javax.swing.JInternalFrame;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 public class Tabla extends JPanel {
 
@@ -81,6 +84,11 @@ public class Tabla extends JPanel {
         ventanaContenedor = contenedor;
         this.ventanaObjetivo=ventanaObjetivo;
         tabla = new JTable(datos, cabecera);
+        
+        //permitiendo multiples lineas en celda
+        
+        tabla.setDefaultRenderer(Object.class, new MultipleLine());
+        
         tabla.getTableHeader().setReorderingAllowed(false);
         //Sobreescritura del modelo de la tabla para poder modificar sus valores.
         DefaultTableModel tableModel = new DefaultTableModel(datos, cabecera) {
@@ -161,5 +169,21 @@ public class Tabla extends JPanel {
         frame.setVisible(true);
         
     }
+}
+class MultipleLine extends JTextArea implements TableCellRenderer {
+    private ArrayList<ArrayList<Integer>> rowColHeight = new ArrayList<>();
+    public MultipleLine(){
+        setLineWrap(true);
+        setWrapStyleWord(true);
+        setOpaque(true);
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        setText((value == null) ? "" : value.toString());
+        setEditable(false);
+        return this;
+    }
+    
 }
 
