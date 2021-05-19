@@ -23,8 +23,8 @@ public class Dia extends javax.swing.JFrame {
     public Dia() {
         initComponents();
         String[] cabecera = new String[3];
-        cabecera[0] = "Nombre de la actividad";
-        cabecera[1] = "Fecha";
+        cabecera[0] = "Hora";
+        cabecera[1] = "Actividad";
         cabecera[2]= "Importancia";
         
         Tabla tabla = new Tabla(cabecera, new Object[24][3], frame,90,"actividad");

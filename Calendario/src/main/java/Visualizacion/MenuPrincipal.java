@@ -61,8 +61,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jTextField5.setText(data.getUsuarios().get(correoUsuario).getPuntajeTotal() + "");
         jList1.setListData((data.getUsuarios().get(correoUsuario).getGustos()).toArray(new String[0]));
         jTextField6.setText(data.getUsuarios().get(correoUsuario).getNivelAcademico());
-        ImagenRanking imagen=new ImagenRanking();
-        jLabel10.setIcon(imagen.ranking);
+      
     }
 
     public void graficarHorario() {
@@ -534,6 +533,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             listado.add(jList1.getModel().getElementAt(i));
         }
         data.getUsuarios().get(correoUsuario).setGustos(listado);
+        data.getUsuarios().get(correoUsuario).setNivelAcademico(jTextField6.getText());
         GestorDatos.guardarDatos(data);
     }//GEN-LAST:event_jButton2ActionPerformed
 
