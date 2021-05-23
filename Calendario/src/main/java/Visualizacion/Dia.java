@@ -5,10 +5,12 @@
  */
 package Visualizacion;
 
+import static Aplicacion.Principal.data;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
+import static Visualizacion.MenuPrincipal.correoUsuario;
 
 /**
  *
@@ -19,19 +21,32 @@ public class Dia extends javax.swing.JFrame {
     /**
      * Creates new form Dia
      */
+
     JInternalFrame frame = new JInternalFrame("Dia");
-    public Dia() {
+    private int mes;
+    private int dia;
+    public Dia(int mes, int dia) {
+        this.mes = mes;
+        this.dia = dia;
         initComponents();
         String[] cabecera = new String[3];
         cabecera[0] = "Hora";
         cabecera[1] = "Actividad";
-        cabecera[2]= "Importancia";
-        
-        Tabla tabla = new Tabla(cabecera, new Object[24][3], frame,90,"actividad");
+        cabecera[2] = "Importancia";
+        String[][] actividades = new String[24][3];
+        for (int i = 0; i < actividades.length; i++) {
+            if (data.getUsuarios().get(MenuPrincipal.correoUsuario).getHorarioUsuario().temporalidad[mes][dia][i] != null) {
+                actividades[i][0] = i + "";
+                actividades[i][1] = data.getUsuarios().get(MenuPrincipal.correoUsuario).getHorarioUsuario().temporalidad[mes][dia][i].getNombre() + "";
+                actividades[i][2] = data.getUsuarios().get(MenuPrincipal.correoUsuario).getHorarioUsuario().temporalidad[mes][dia][i].getImportancia() + "";
+            }
+
+        }
+        Tabla tabla = new Tabla(cabecera, actividades, frame, 90, "actividad", this);
         this.jPanel1.add(frame);
         frame.setContentPane(tabla);
         frame.setBorder(null);
-        ((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getUI()).setNorthPane(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
         frame.pack();
         try {
             frame.setMaximum(true);
@@ -39,6 +54,13 @@ public class Dia extends javax.swing.JFrame {
             Logger.getLogger(Dia.class.getName()).log(Level.SEVERE, null, ex);
         }
         frame.setVisible(true);
+    }
+    
+    public int getMes(){
+        return this.mes;
+    }
+    public int getDia(){
+        return this.dia;
     }
 
     /**
@@ -84,41 +106,6 @@ public class Dia extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Dia().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;

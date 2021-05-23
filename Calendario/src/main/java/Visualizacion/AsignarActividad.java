@@ -8,6 +8,7 @@ package Visualizacion;
 import Aplicacion.Actividad;
 import static Aplicacion.Principal.data;
 import Persistencia.GestorDatos;
+import static Visualizacion.MenuPrincipal.correoUsuario;
 
 /**
  *
@@ -25,6 +26,16 @@ public class AsignarActividad extends javax.swing.JFrame {
         initComponents();
         setTitle("Asignación");
         setLocationRelativeTo(null);
+    }
+    public AsignarActividad(String correoUsuario, int mes, int dia, int hora) {
+        this.correoUsuario = correoUsuario;
+        initComponents();
+        setTitle("Asignación");
+        setLocationRelativeTo(null);
+        jComboBox1.setSelectedIndex(mes);
+        jComboBox2.setSelectedIndex(dia);
+        jComboBox3.setSelectedIndex(hora);
+        // Buscar los valores de la actividad y bloquear los que no se pueden cambiar... ese seria para editar una actividad existente
     }
 
     /**
@@ -200,9 +211,7 @@ public class AsignarActividad extends javax.swing.JFrame {
             data.getUsuarios().get(correoUsuario).getHorarioUsuario().temporalidad[mes][dia][hora] = new Actividad(nombre, importancia);
             GestorDatos.guardarDatos(data);
         }
-        else{
-            System.out.println("Hay una actividad.Putop el que lo lea");
-        }
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed

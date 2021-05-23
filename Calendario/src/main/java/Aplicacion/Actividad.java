@@ -17,6 +17,12 @@ public class Actividad implements Serializable {
     public void setEstado(boolean e){
         this.estado=e;
     }
+    public void setNombre(String n){
+        this.nombre=n;
+    }
+    public void setImportancia(int i){
+        this.importancia=i;
+    }
     public boolean getEstado(){
         return this.estado;
     }

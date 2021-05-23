@@ -41,7 +41,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      * Creates new form MenuPrincipal
      */
     JInternalFrame frame = new JInternalFrame("calendario");
-    String correoUsuario;
+    public static String correoUsuario;
 
     public MenuPrincipal(String correoUsuario) {
         this.correoUsuario = correoUsuario;
@@ -61,7 +61,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jTextField5.setText(data.getUsuarios().get(correoUsuario).getPuntajeTotal() + "");
         jList1.setListData((data.getUsuarios().get(correoUsuario).getGustos()).toArray(new String[0]));
         jTextField6.setText(data.getUsuarios().get(correoUsuario).getNivelAcademico());
-      
+
+    }
+    //Actualizar puntaje
+    public  void Actualizar(){
+        this.repaint();
     }
 
     public void graficarHorario() {
@@ -78,46 +82,46 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         String[][] actividadesMes = new String[6][7];
 
-        int diaInicial=0;
-        int indiceMes=jComboBox1.getSelectedIndex(); 
+        int diaInicial = 0;
+        int indiceMes = jComboBox1.getSelectedIndex();
         switch (indiceMes) {
             case 0:
-                diaInicial=5;
+                diaInicial = 5;
                 break;
             case 1:
-                diaInicial=1;
+                diaInicial = 1;
                 break;
             case 2:
-                diaInicial=1;
+                diaInicial = 1;
                 break;
             case 3:
-                diaInicial=4;
-                break; 
+                diaInicial = 4;
+                break;
             case 4:
-                diaInicial=6;
+                diaInicial = 6;
                 break;
             case 5:
-                diaInicial=2;
+                diaInicial = 2;
                 break;
             case 6:
-                diaInicial=4;
+                diaInicial = 4;
                 break;
             case 7:
-                diaInicial=0;
+                diaInicial = 0;
                 break;
             case 8:
-                diaInicial=3;
+                diaInicial = 3;
                 break;
             case 9:
-                diaInicial=5;
+                diaInicial = 5;
                 break;
             case 10:
-                diaInicial=1;
+                diaInicial = 1;
                 break;
             case 11:
-                diaInicial=3;
+                diaInicial = 3;
                 break;
-                
+
         }
         boolean inicia = true;
         int j = 0;
@@ -136,7 +140,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
             }
         }
-        Tabla tabla = new Tabla(cabecera, actividadesMes, frame, 90, "dia");
+        Tabla tabla = new Tabla(cabecera, actividadesMes, frame, 90, "dia", this);
 
         this.jPanel4.add(frame);
         frame.setContentPane(tabla);
@@ -157,12 +161,27 @@ public class MenuPrincipal extends javax.swing.JFrame {
         if (limiteActividades > 24) {
             limiteActividades = 24;
         }
-        for (int i = 0; i < limiteActividades; i++) {
+        int i = 0;
+        int k=0;
+        while (i < actividades.length && k<limiteActividades ) {
+            if (actividades[i] != null) {
+                tarea = tarea + actividades[i].getNombre() + "\n";
+
+                k++;
+            } 
+            i++;
+
+        }
+        /*for (int i = 0; i < limiteActividades; i++) {
             if (actividades[i] != null) {
                 tarea = tarea + actividades[i].getNombre() + "\n";
             }
-        }
+        }*/
         return tarea;
+    }
+
+    public int getMes() {
+        return jComboBox1.getSelectedIndex();
     }
 
     /**
@@ -223,6 +242,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Mes");
 
@@ -319,6 +343,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jLabel7.setText("Gustos");
 
+        jTextField5.setEnabled(false);
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
@@ -588,6 +613,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -633,13 +662,4 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
 
     }
-    public class ImagenRanking extends JFrame{
-        ImageIcon ranking= new ImageIcon("top.jpg");
-        public ImagenRanking(){
-        initComponents();
-        this.setLocationRelativeTo(null);
-        jLabel10.setText("");
-        }
-    }
-    
 }
