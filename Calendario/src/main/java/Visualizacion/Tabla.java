@@ -38,49 +38,6 @@ public class Tabla extends JPanel {
     Function nextView;
     Object cosa;
 
-    public Tabla() {
-        super(new GridLayout(1, 0));
-        ventanaContenedor = new JInternalFrame();
-        String[] columnNames = {"First Name",
-            "Last Name",
-            "Sport",
-            "# of Years",
-            "Vegetarian"};
-
-        Object[][] data = {
-            {"Kathy", "Smith",
-                "Snowboarding", new Integer(5), new Boolean(false)},
-            {"John", "Doe",
-                "Rowing", new Integer(3), new Boolean(true)},
-            {"Sue", "Black",
-                "Knitting", new Integer(2), new Boolean(false)},
-            {"Jane", "White",
-                "Speed reading", new Integer(20), new Boolean(true)},
-            {"Joe", "Brown",
-                "Pool", new Integer(10), new Boolean(false)}
-        };
-
-        final JTable table = new JTable(data, columnNames);
-        table.setEnabled(false);
-        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-        table.setFillsViewportHeight(true);
-
-        if (DEBUG) {
-            table.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    printDebugData(table);
-                }
-            });
-        }
-
-        //Create the scroll pane and add the table to it.
-        JScrollPane scrollPane = new JScrollPane(table);
-
-        //Add the scroll pane to this panel.
-        add(scrollPane);
-
-    }
-
     public Tabla(String[] cabecera, Object[][] datos, JInternalFrame contenedor, int alto, String ventanaObjetivo, Object cosa) {
         super(new GridLayout(1, 0));
         this.nextView = nextView;
@@ -213,22 +170,6 @@ public class Tabla extends JPanel {
         System.out.println("--------------------------");
     }
 
-    public void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("SimpleTableDemo");
-        frame.setTitle(titulo);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //Create and set up the content pane.
-        Tabla newContentPane = new Tabla();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(this);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-
-    }
 }
 
 class MultipleLine extends JTextArea implements TableCellRenderer {
